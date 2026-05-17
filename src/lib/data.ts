@@ -1,0 +1,242 @@
+import { Product, Dispensary } from "./types";
+
+export const dispensaries: Dispensary[] = [
+  {
+    id: "1",
+    name: "Green Valley Dispensary",
+    slug: "green-valley-dispensary",
+    description:
+      "Premium cannabis products in a welcoming environment. Serving the community with top-shelf flower, edibles, and concentrates.",
+    address: "420 Main Street",
+    city: "Denver",
+    state: "CO",
+    zip: "80202",
+    phone: "(303) 555-0142",
+    hours: "Mon-Sat 9AM-9PM, Sun 10AM-6PM",
+    image: "/dispensaries/green-valley.jpg",
+    rating: 4.8,
+    reviewCount: 324,
+    license: "MED-2024-001",
+    delivery: true,
+    pickup: true,
+  },
+  {
+    id: "2",
+    name: "Mountain High Cannabis",
+    slug: "mountain-high-cannabis",
+    description:
+      "Locally grown, lab-tested cannabis. We pride ourselves on sustainable cultivation and knowledgeable staff.",
+    address: "1200 Pearl Street",
+    city: "Boulder",
+    state: "CO",
+    zip: "80302",
+    phone: "(720) 555-0198",
+    hours: "Mon-Sun 8AM-10PM",
+    image: "/dispensaries/mountain-high.jpg",
+    rating: 4.6,
+    reviewCount: 256,
+    license: "MED-2024-002",
+    delivery: true,
+    pickup: true,
+  },
+  {
+    id: "3",
+    name: "Sunset Wellness Co.",
+    slug: "sunset-wellness-co",
+    description:
+      "Focused on wellness and therapeutic cannabis products. Expert consultations available for medical patients.",
+    address: "890 Sunset Blvd",
+    city: "Aurora",
+    state: "CO",
+    zip: "80012",
+    phone: "(303) 555-0267",
+    hours: "Mon-Fri 10AM-8PM, Sat-Sun 10AM-6PM",
+    image: "/dispensaries/sunset-wellness.jpg",
+    rating: 4.9,
+    reviewCount: 189,
+    license: "MED-2024-003",
+    delivery: false,
+    pickup: true,
+  },
+];
+
+export const products: Product[] = [
+  {
+    id: "1",
+    name: "Blue Dream",
+    slug: "blue-dream",
+    description:
+      "A legendary sativa-dominant hybrid with sweet berry aroma. Known for balanced full-body relaxation with gentle cerebral invigoration.",
+    price: 45,
+    category: "flower",
+    strain: "hybrid",
+    thc: 21,
+    cbd: 0.1,
+    weight: "3.5g",
+    image: "/products/blue-dream.jpg",
+    dispensaryId: "1",
+    inStock: true,
+    rating: 4.7,
+    reviewCount: 89,
+  },
+  {
+    id: "2",
+    name: "OG Kush",
+    slug: "og-kush",
+    description:
+      "A classic indica-dominant strain with earthy pine and sour lemon scent. Delivers heavy euphoria and stress relief.",
+    price: 50,
+    category: "flower",
+    strain: "indica",
+    thc: 24,
+    cbd: 0.3,
+    weight: "3.5g",
+    image: "/products/og-kush.jpg",
+    dispensaryId: "1",
+    inStock: true,
+    rating: 4.8,
+    reviewCount: 112,
+  },
+  {
+    id: "3",
+    name: "Sour Diesel",
+    slug: "sour-diesel",
+    description:
+      "An invigorating sativa with pungent diesel aroma. Fast-acting, dreamy cerebral effects perfect for daytime use.",
+    price: 48,
+    category: "flower",
+    strain: "sativa",
+    thc: 22,
+    cbd: 0.2,
+    weight: "3.5g",
+    image: "/products/sour-diesel.jpg",
+    dispensaryId: "2",
+    inStock: true,
+    rating: 4.6,
+    reviewCount: 76,
+  },
+  {
+    id: "4",
+    name: "Midnight Gummies",
+    slug: "midnight-gummies",
+    description:
+      "Indica-infused gummies with 10mg THC per piece. Perfect for unwinding in the evening with a calming body high.",
+    price: 25,
+    category: "edibles",
+    strain: "indica",
+    thc: 10,
+    cbd: 0,
+    weight: "100mg (10pc)",
+    image: "/products/midnight-gummies.jpg",
+    dispensaryId: "2",
+    inStock: true,
+    rating: 4.5,
+    reviewCount: 203,
+  },
+  {
+    id: "5",
+    name: "Citrus Haze Cartridge",
+    slug: "citrus-haze-cartridge",
+    description:
+      "Premium live resin vape cartridge with bright citrus flavor. Smooth hits with uplifting sativa effects.",
+    price: 55,
+    category: "vaporizers",
+    strain: "sativa",
+    thc: 85,
+    cbd: 0,
+    weight: "1g",
+    image: "/products/citrus-haze-cart.jpg",
+    dispensaryId: "1",
+    inStock: true,
+    rating: 4.4,
+    reviewCount: 67,
+  },
+  {
+    id: "6",
+    name: "CBD Relief Balm",
+    slug: "cbd-relief-balm",
+    description:
+      "Topical balm infused with 500mg CBD and essential oils. Targeted relief for sore muscles and joint pain.",
+    price: 35,
+    category: "topicals",
+    strain: "cbd",
+    thc: 0,
+    cbd: 500,
+    weight: "2oz",
+    image: "/products/cbd-balm.jpg",
+    dispensaryId: "3",
+    inStock: true,
+    rating: 4.9,
+    reviewCount: 145,
+  },
+  {
+    id: "7",
+    name: "Gorilla Glue Shatter",
+    slug: "gorilla-glue-shatter",
+    description:
+      "High-potency concentrate with earthy, piney flavor. Glass-like consistency perfect for dabbing.",
+    price: 60,
+    category: "concentrates",
+    strain: "hybrid",
+    thc: 78,
+    cbd: 0,
+    weight: "1g",
+    image: "/products/gg-shatter.jpg",
+    dispensaryId: "2",
+    inStock: false,
+    rating: 4.7,
+    reviewCount: 54,
+  },
+  {
+    id: "8",
+    name: "Pre-Roll Variety Pack",
+    slug: "pre-roll-variety-pack",
+    description:
+      "Assorted pack of 5 premium pre-rolls featuring our most popular strains. Perfect for trying something new.",
+    price: 40,
+    category: "pre-rolls",
+    strain: "hybrid",
+    thc: 20,
+    cbd: 0.5,
+    weight: "5x0.5g",
+    image: "/products/variety-prerolls.jpg",
+    dispensaryId: "3",
+    inStock: true,
+    rating: 4.3,
+    reviewCount: 91,
+  },
+  {
+    id: "9",
+    name: "Sleep Tincture",
+    slug: "sleep-tincture",
+    description:
+      "Full-spectrum THC:CBD tincture in a 1:1 ratio. Sublingual drops designed for restful sleep and relaxation.",
+    price: 42,
+    category: "tinctures",
+    strain: "indica",
+    thc: 15,
+    cbd: 15,
+    weight: "30ml",
+    image: "/products/sleep-tincture.jpg",
+    dispensaryId: "3",
+    inStock: true,
+    rating: 4.8,
+    reviewCount: 178,
+  },
+];
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find((p) => p.slug === slug);
+}
+
+export function getDispensaryBySlug(slug: string): Dispensary | undefined {
+  return dispensaries.find((d) => d.slug === slug);
+}
+
+export function getProductsByDispensary(dispensaryId: string): Product[] {
+  return products.filter((p) => p.dispensaryId === dispensaryId);
+}
+
+export function getProductsByCategory(category: string): Product[] {
+  return products.filter((p) => p.category === category);
+}

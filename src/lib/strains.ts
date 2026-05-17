@@ -1,0 +1,471 @@
+export interface Strain {
+  id: string;
+  name: string;
+  slug: string;
+  type: "sativa" | "indica" | "hybrid" | "cbd";
+  thc: number;
+  cbd: number;
+  terpenes: string[];
+  effects: string[];
+  flavors: string[];
+  description: string;
+  lineage: { parent1: string; parent2: string };
+  growDifficulty: "easy" | "moderate" | "hard";
+  flowerTime: string;
+}
+
+export interface InventoryUnit {
+  id: string;
+  strainId: string;
+  dispensaryId: string;
+  size: string;
+  unit: string;
+  price: number;
+  quantity: number;
+  batchId: string;
+  harvestDate: string;
+  testDate: string;
+  thcTested: number;
+  cbdTested: number;
+  status: "available" | "low-stock" | "sold-out" | "coming-soon";
+}
+
+export const strains: Strain[] = [
+  {
+    id: "s1",
+    name: "Blue Dream",
+    slug: "blue-dream",
+    type: "hybrid",
+    thc: 21,
+    cbd: 0.1,
+    terpenes: ["Myrcene", "Caryophyllene", "Pinene"],
+    effects: ["Relaxed", "Creative", "Euphoric", "Happy"],
+    flavors: ["Berry", "Sweet", "Herbal"],
+    description:
+      "A California classic. Blue Dream balances full-body relaxation with gentle cerebral invigoration. Perfect for daytime relief without heavy sedation.",
+    lineage: { parent1: "Blueberry", parent2: "Haze" },
+    growDifficulty: "easy",
+    flowerTime: "9-10 weeks",
+  },
+  {
+    id: "s2",
+    name: "OG Kush",
+    slug: "og-kush",
+    type: "indica",
+    thc: 24,
+    cbd: 0.3,
+    terpenes: ["Limonene", "Myrcene", "Linalool"],
+    effects: ["Euphoric", "Sleepy", "Hungry", "Relaxed"],
+    flavors: ["Earthy", "Pine", "Woody"],
+    description:
+      "The backbone of West Coast cannabis. OG Kush delivers heavy euphoria and stress relief with its signature earthy, pine aroma.",
+    lineage: { parent1: "Chemdawg", parent2: "Hindu Kush" },
+    growDifficulty: "moderate",
+    flowerTime: "8-9 weeks",
+  },
+  {
+    id: "s3",
+    name: "Sour Diesel",
+    slug: "sour-diesel",
+    type: "sativa",
+    thc: 22,
+    cbd: 0.2,
+    terpenes: ["Caryophyllene", "Limonene", "Myrcene"],
+    effects: ["Energetic", "Creative", "Focused", "Uplifted"],
+    flavors: ["Diesel", "Citrus", "Pungent"],
+    description:
+      "Fast-acting sativa with dreamy cerebral effects. Named for its pungent, diesel-like aroma. A go-to for daytime productivity.",
+    lineage: { parent1: "Chemdawg 91", parent2: "Super Skunk" },
+    growDifficulty: "moderate",
+    flowerTime: "10-11 weeks",
+  },
+  {
+    id: "s4",
+    name: "Girl Scout Cookies",
+    slug: "girl-scout-cookies",
+    type: "hybrid",
+    thc: 25,
+    cbd: 0.1,
+    terpenes: ["Caryophyllene", "Limonene", "Humulene"],
+    effects: ["Euphoric", "Happy", "Relaxed", "Creative"],
+    flavors: ["Sweet", "Earthy", "Mint"],
+    description:
+      "A potent hybrid with a sweet, earthy aroma. GSC launches you to euphoria before settling into full-body relaxation.",
+    lineage: { parent1: "OG Kush", parent2: "Durban Poison" },
+    growDifficulty: "hard",
+    flowerTime: "9-10 weeks",
+  },
+  {
+    id: "s5",
+    name: "Granddaddy Purple",
+    slug: "granddaddy-purple",
+    type: "indica",
+    thc: 20,
+    cbd: 0.1,
+    terpenes: ["Myrcene", "Pinene", "Caryophyllene"],
+    effects: ["Sleepy", "Relaxed", "Hungry", "Euphoric"],
+    flavors: ["Grape", "Berry", "Sweet"],
+    description:
+      "A famous indica cross known for its complex grape and berry aroma. Delivers a potent physical relaxation paired with cerebral euphoria.",
+    lineage: { parent1: "Purple Urkle", parent2: "Big Bud" },
+    growDifficulty: "easy",
+    flowerTime: "8-11 weeks",
+  },
+  {
+    id: "s6",
+    name: "Jack Herer",
+    slug: "jack-herer",
+    type: "sativa",
+    thc: 18,
+    cbd: 0.1,
+    terpenes: ["Terpinolene", "Pinene", "Myrcene"],
+    effects: ["Creative", "Energetic", "Focused", "Happy"],
+    flavors: ["Pine", "Earthy", "Spicy"],
+    description:
+      "Named after the cannabis activist, Jack Herer captures the cerebral elevation associated with sativas while producing heavy resin.",
+    lineage: { parent1: "Haze", parent2: "Northern Lights #5 x Shiva Skunk" },
+    growDifficulty: "moderate",
+    flowerTime: "8-10 weeks",
+  },
+  {
+    id: "s7",
+    name: "Wedding Cake",
+    slug: "wedding-cake",
+    type: "hybrid",
+    thc: 27,
+    cbd: 0.1,
+    terpenes: ["Limonene", "Caryophyllene", "Myrcene"],
+    effects: ["Relaxed", "Euphoric", "Happy", "Sleepy"],
+    flavors: ["Vanilla", "Sweet", "Earthy"],
+    description:
+      "A rich, tangy hybrid with relaxing and euphoric effects. Wedding Cake is known for its high THC content and dessert-like flavor profile.",
+    lineage: { parent1: "Triangle Kush", parent2: "Animal Mints" },
+    growDifficulty: "moderate",
+    flowerTime: "7-9 weeks",
+  },
+  {
+    id: "s8",
+    name: "ACDC",
+    slug: "acdc",
+    type: "cbd",
+    thc: 1,
+    cbd: 20,
+    terpenes: ["Myrcene", "Pinene", "Caryophyllene"],
+    effects: ["Relaxed", "Focused", "Happy", "Pain Relief"],
+    flavors: ["Earthy", "Woody", "Pine"],
+    description:
+      "A CBD-dominant strain with a remarkable THC:CBD ratio of 1:20. Ideal for patients seeking relief without intoxication.",
+    lineage: { parent1: "Cannatonic", parent2: "Ruderalis" },
+    growDifficulty: "easy",
+    flowerTime: "9-10 weeks",
+  },
+  {
+    id: "s9",
+    name: "Gelato",
+    slug: "gelato",
+    type: "hybrid",
+    thc: 23,
+    cbd: 0.1,
+    terpenes: ["Limonene", "Caryophyllene", "Humulene"],
+    effects: ["Relaxed", "Euphoric", "Creative", "Uplifted"],
+    flavors: ["Sweet", "Citrus", "Berry"],
+    description:
+      "A flavorful hybrid with a dessert-like aroma. Gelato offers a balanced high that relaxes the body while keeping the mind sharp.",
+    lineage: { parent1: "Sunset Sherbet", parent2: "Thin Mint GSC" },
+    growDifficulty: "hard",
+    flowerTime: "8-9 weeks",
+  },
+  {
+    id: "s10",
+    name: "Northern Lights",
+    slug: "northern-lights",
+    type: "indica",
+    thc: 18,
+    cbd: 0.1,
+    terpenes: ["Myrcene", "Caryophyllene", "Pinene"],
+    effects: ["Sleepy", "Relaxed", "Happy", "Euphoric"],
+    flavors: ["Earthy", "Pine", "Sweet"],
+    description:
+      "One of the most famous indicas of all time. Northern Lights packs a resinous punch with a fast, dreamy euphoria that settles into full-body calm.",
+    lineage: { parent1: "Afghani", parent2: "Thai" },
+    growDifficulty: "easy",
+    flowerTime: "7-9 weeks",
+  },
+];
+
+export const inventory: InventoryUnit[] = [
+  // Green Valley Dispensary
+  {
+    id: "inv-1",
+    strainId: "s1",
+    dispensaryId: "1",
+    size: "1g",
+    unit: "gram",
+    price: 14,
+    quantity: 48,
+    batchId: "GV-BD-2026-042",
+    harvestDate: "2026-04-15",
+    testDate: "2026-04-22",
+    thcTested: 21.3,
+    cbdTested: 0.08,
+    status: "available",
+  },
+  {
+    id: "inv-2",
+    strainId: "s1",
+    dispensaryId: "1",
+    size: "3.5g",
+    unit: "eighth",
+    price: 45,
+    quantity: 22,
+    batchId: "GV-BD-2026-042",
+    harvestDate: "2026-04-15",
+    testDate: "2026-04-22",
+    thcTested: 21.3,
+    cbdTested: 0.08,
+    status: "available",
+  },
+  {
+    id: "inv-3",
+    strainId: "s1",
+    dispensaryId: "1",
+    size: "7g",
+    unit: "quarter",
+    price: 80,
+    quantity: 10,
+    batchId: "GV-BD-2026-042",
+    harvestDate: "2026-04-15",
+    testDate: "2026-04-22",
+    thcTested: 21.3,
+    cbdTested: 0.08,
+    status: "available",
+  },
+  {
+    id: "inv-4",
+    strainId: "s1",
+    dispensaryId: "1",
+    size: "28g",
+    unit: "ounce",
+    price: 280,
+    quantity: 3,
+    batchId: "GV-BD-2026-042",
+    harvestDate: "2026-04-15",
+    testDate: "2026-04-22",
+    thcTested: 21.3,
+    cbdTested: 0.08,
+    status: "low-stock",
+  },
+  {
+    id: "inv-5",
+    strainId: "s2",
+    dispensaryId: "1",
+    size: "3.5g",
+    unit: "eighth",
+    price: 50,
+    quantity: 35,
+    batchId: "GV-OG-2026-039",
+    harvestDate: "2026-04-01",
+    testDate: "2026-04-08",
+    thcTested: 24.1,
+    cbdTested: 0.28,
+    status: "available",
+  },
+  {
+    id: "inv-6",
+    strainId: "s2",
+    dispensaryId: "1",
+    size: "7g",
+    unit: "quarter",
+    price: 90,
+    quantity: 12,
+    batchId: "GV-OG-2026-039",
+    harvestDate: "2026-04-01",
+    testDate: "2026-04-08",
+    thcTested: 24.1,
+    cbdTested: 0.28,
+    status: "available",
+  },
+  {
+    id: "inv-7",
+    strainId: "s4",
+    dispensaryId: "1",
+    size: "3.5g",
+    unit: "eighth",
+    price: 55,
+    quantity: 0,
+    batchId: "GV-GSC-2026-038",
+    harvestDate: "2026-03-20",
+    testDate: "2026-03-27",
+    thcTested: 25.4,
+    cbdTested: 0.09,
+    status: "sold-out",
+  },
+  {
+    id: "inv-8",
+    strainId: "s7",
+    dispensaryId: "1",
+    size: "3.5g",
+    unit: "eighth",
+    price: 58,
+    quantity: 0,
+    batchId: "GV-WC-2026-044",
+    harvestDate: "2026-05-01",
+    testDate: "2026-05-08",
+    thcTested: 27.2,
+    cbdTested: 0.07,
+    status: "coming-soon",
+  },
+  // Mountain High Cannabis
+  {
+    id: "inv-9",
+    strainId: "s3",
+    dispensaryId: "2",
+    size: "3.5g",
+    unit: "eighth",
+    price: 48,
+    quantity: 28,
+    batchId: "MH-SD-2026-041",
+    harvestDate: "2026-04-10",
+    testDate: "2026-04-17",
+    thcTested: 22.5,
+    cbdTested: 0.18,
+    status: "available",
+  },
+  {
+    id: "inv-10",
+    strainId: "s3",
+    dispensaryId: "2",
+    size: "7g",
+    unit: "quarter",
+    price: 85,
+    quantity: 8,
+    batchId: "MH-SD-2026-041",
+    harvestDate: "2026-04-10",
+    testDate: "2026-04-17",
+    thcTested: 22.5,
+    cbdTested: 0.18,
+    status: "available",
+  },
+  {
+    id: "inv-11",
+    strainId: "s5",
+    dispensaryId: "2",
+    size: "3.5g",
+    unit: "eighth",
+    price: 45,
+    quantity: 40,
+    batchId: "MH-GDP-2026-040",
+    harvestDate: "2026-04-05",
+    testDate: "2026-04-12",
+    thcTested: 20.8,
+    cbdTested: 0.12,
+    status: "available",
+  },
+  {
+    id: "inv-12",
+    strainId: "s6",
+    dispensaryId: "2",
+    size: "3.5g",
+    unit: "eighth",
+    price: 42,
+    quantity: 5,
+    batchId: "MH-JH-2026-037",
+    harvestDate: "2026-03-15",
+    testDate: "2026-03-22",
+    thcTested: 18.9,
+    cbdTested: 0.11,
+    status: "low-stock",
+  },
+  {
+    id: "inv-13",
+    strainId: "s9",
+    dispensaryId: "2",
+    size: "3.5g",
+    unit: "eighth",
+    price: 52,
+    quantity: 18,
+    batchId: "MH-GL-2026-043",
+    harvestDate: "2026-04-20",
+    testDate: "2026-04-27",
+    thcTested: 23.6,
+    cbdTested: 0.06,
+    status: "available",
+  },
+  // Sunset Wellness Co.
+  {
+    id: "inv-14",
+    strainId: "s8",
+    dispensaryId: "3",
+    size: "3.5g",
+    unit: "eighth",
+    price: 38,
+    quantity: 55,
+    batchId: "SW-AC-2026-040",
+    harvestDate: "2026-04-08",
+    testDate: "2026-04-15",
+    thcTested: 0.9,
+    cbdTested: 20.4,
+    status: "available",
+  },
+  {
+    id: "inv-15",
+    strainId: "s8",
+    dispensaryId: "3",
+    size: "7g",
+    unit: "quarter",
+    price: 68,
+    quantity: 30,
+    batchId: "SW-AC-2026-040",
+    harvestDate: "2026-04-08",
+    testDate: "2026-04-15",
+    thcTested: 0.9,
+    cbdTested: 20.4,
+    status: "available",
+  },
+  {
+    id: "inv-16",
+    strainId: "s10",
+    dispensaryId: "3",
+    size: "3.5g",
+    unit: "eighth",
+    price: 40,
+    quantity: 20,
+    batchId: "SW-NL-2026-042",
+    harvestDate: "2026-04-18",
+    testDate: "2026-04-25",
+    thcTested: 18.2,
+    cbdTested: 0.09,
+    status: "available",
+  },
+  {
+    id: "inv-17",
+    strainId: "s5",
+    dispensaryId: "3",
+    size: "3.5g",
+    unit: "eighth",
+    price: 44,
+    quantity: 2,
+    batchId: "SW-GDP-2026-041",
+    harvestDate: "2026-04-12",
+    testDate: "2026-04-19",
+    thcTested: 19.5,
+    cbdTested: 0.14,
+    status: "low-stock",
+  },
+];
+
+export function getStrainBySlug(slug: string): Strain | undefined {
+  return strains.find((s) => s.slug === slug);
+}
+
+export function getInventoryByStrain(strainId: string): InventoryUnit[] {
+  return inventory.filter((i) => i.strainId === strainId);
+}
+
+export function getInventoryByDispensary(dispensaryId: string): InventoryUnit[] {
+  return inventory.filter((i) => i.dispensaryId === dispensaryId);
+}
+
+export function getLiveInventory(): InventoryUnit[] {
+  return inventory.filter((i) => i.status !== "sold-out");
+}
