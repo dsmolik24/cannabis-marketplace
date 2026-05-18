@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getStrainBySlug, getInventoryByStrain, inventory } from "@/lib/strains";
+import { getStrainBySlug, getInventoryByStrain, inventory, growHouses } from "@/lib/strains";
 import { dispensaries } from "@/lib/data";
 
 export default async function StrainDetailPage({
@@ -222,6 +222,7 @@ export default async function StrainDetailPage({
                               THC Tested
                             </th>
                             <th className="px-4 py-3 font-medium">Batch</th>
+                            <th className="px-4 py-3 font-medium">Grow House</th>
                             <th className="px-4 py-3 font-medium">Status</th>
                             <th className="px-4 py-3 font-medium"></th>
                           </tr>
@@ -261,6 +262,21 @@ export default async function StrainDetailPage({
                                 <span className="rounded bg-zinc-100 px-2 py-0.5 font-mono text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
                                   {item.batchId}
                                 </span>
+                              </td>
+                              <td className="px-4 py-3">
+                                {(() => {
+                                  const gh = growHouses.find(
+                                    (g) => g.id === item.growHouseId
+                                  );
+                                  return gh ? (
+                                    <Link
+                                      href={`/grow-houses/${gh.slug}`}
+                                      className="text-xs text-zinc-600 hover:text-green-700 dark:text-zinc-400 dark:hover:text-green-500"
+                                    >
+                                      {gh.name}
+                                    </Link>
+                                  ) : null;
+                                })()}
                               </td>
                               <td className="px-4 py-3">
                                 <InventoryStatus status={item.status} />

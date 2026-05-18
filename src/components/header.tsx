@@ -30,6 +30,12 @@ export function Header() {
             Dispensaries
           </Link>
           <Link
+            href="/grow-houses"
+            className="text-sm font-medium text-zinc-600 transition-colors hover:text-green-700 dark:text-zinc-400 dark:hover:text-green-500"
+          >
+            Grow Houses
+          </Link>
+          <Link
             href="/cart"
             className="text-sm font-medium text-zinc-600 transition-colors hover:text-green-700 dark:text-zinc-400 dark:hover:text-green-500"
           >

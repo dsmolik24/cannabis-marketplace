@@ -53,6 +53,26 @@ export interface CartItem {
   product: Product;
 }
 
+export interface GrowHouse {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  address: string;
+  city: string;
+  state: string;
+  license: string;
+  type: "indoor" | "outdoor" | "greenhouse" | "hybrid";
+  certifications: string[];
+  capacity: string;
+  phone: string;
+  email: string;
+  wholesale: boolean;
+  minOrder: string;
+  rating: number;
+  reviewCount: number;
+}
+
 export interface User {
   id: string;
   email: string;
