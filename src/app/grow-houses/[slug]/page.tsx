@@ -3,9 +3,13 @@ import Link from "next/link";
 import {
   getGrowHouseBySlug,
   getInventoryByGrowHouse,
+  getVolumesByGrowHouse,
+  getCoasByGrowHouse,
   strains,
 } from "@/lib/strains";
 import { dispensaries } from "@/lib/data";
+import { LeafRating } from "@/components/leaf-rating";
+import { CoaBadge } from "@/components/coa-badge";
 
 export default async function GrowHouseDetailPage({
   params,
@@ -20,6 +24,8 @@ export default async function GrowHouseDetailPage({
   }
 
   const ghInventory = getInventoryByGrowHouse(growHouse.id);
+  const volumes = getVolumesByGrowHouse(growHouse.id);
+  const ghCoas = getCoasByGrowHouse(growHouse.id);
 
   // Group by strain
   const byStrain = new Map<string, typeof ghInventory>();
@@ -61,14 +67,7 @@ export default async function GrowHouseDetailPage({
               {growHouse.description}
             </p>
           </div>
-          <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2 dark:bg-green-900/20">
-            <span className="text-xl font-bold text-green-800 dark:text-green-400">
-              {growHouse.rating}
-            </span>
-            <span className="text-sm text-green-600 dark:text-green-500">
-              ({growHouse.reviewCount} reviews)
-            </span>
-          </div>
+          <LeafRating rating={growHouse.rating} size="lg" showValue reviewCount={growHouse.reviewCount} />
         </div>
 
         {/* Info Grid */}
@@ -128,6 +127,115 @@ export default async function GrowHouseDetailPage({
           }
         />
       </div>
+
+      {/* Live Volume from Grower */}
+      {volumes.length > 0 && (
+        <div className="mt-8">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+              Live Volume
+            </h2>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+            </span>
+            <span className="text-xs text-zinc-400 dark:text-zinc-500">
+              Updated {new Date(volumes[0].lastUpdated).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+            </span>
+          </div>
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {volumes.map((vol) => {
+              const strain = strains.find((s) => s.id === vol.strainId);
+              if (!strain) return null;
+              const pct = vol.projectedLbs > 0 ? Math.round((vol.availableLbs / vol.projectedLbs) * 100) : 0;
+              return (
+                <div
+                  key={`${vol.growHouseId}-${vol.strainId}`}
+                  className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"
+                >
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href={`/strains/${strain.slug}`}
+                      className="font-semibold text-zinc-900 hover:text-green-700 dark:text-zinc-100 dark:hover:text-green-500"
+                    >
+                      {strain.name}
+                    </Link>
+                    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                      vol.availableLbs > 20
+                        ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                        : vol.availableLbs > 0
+                          ? "bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400"
+                          : "bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400"
+                    }`}>
+                      {vol.availableLbs > 0 ? `${vol.availableLbs} lbs` : "Sold Out"}
+                    </span>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                      <span>Available vs Projected</span>
+                      <span>{pct}%</span>
+                    </div>
+                    <div className="mt-1 h-2 rounded-full bg-zinc-100 dark:bg-zinc-800">
+                      <div
+                        className={`h-full rounded-full transition-all ${
+                          pct > 50 ? "bg-green-500" : pct > 20 ? "bg-amber-500" : "bg-red-500"
+                        }`}
+                        style={{ width: `${Math.min(pct, 100)}%` }}
+                      />
+                    </div>
+                    <div className="mt-2 flex items-center justify-between text-xs text-zinc-400 dark:text-zinc-500">
+                      <span>Projected: {vol.projectedLbs} lbs</span>
+                      <span>Next harvest: {new Date(vol.nextHarvestDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-3 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-500 dark:bg-zinc-800/50 dark:text-zinc-400">
+            Total available: <span className="font-semibold text-zinc-900 dark:text-zinc-100">{volumes.reduce((s, v) => s + v.availableLbs, 0)} lbs</span>
+            {" | "}
+            Projected capacity: <span className="font-semibold text-zinc-900 dark:text-zinc-100">{volumes.reduce((s, v) => s + v.projectedLbs, 0)} lbs</span>
+          </div>
+        </div>
+      )}
+
+      {/* COA Certificates */}
+      {ghCoas.length > 0 && (
+        <div className="mt-8">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+              Certificates of Analysis
+            </h2>
+            <span className="rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/20 dark:text-green-400">
+              {ghCoas.filter((c) => c.status === "verified").length} verified
+            </span>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {ghCoas.map((coa) => {
+              const strain = strains.find((s) => s.id === coa.strainId);
+              return (
+                <Link
+                  key={coa.id}
+                  href={`/coa/${coa.id}`}
+                  className="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white px-4 py-3 transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                >
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400">{coa.batchId}</span>
+                      <CoaBadge coa={coa} />
+                    </div>
+                    <div className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-300">
+                      {strain?.name} | THC {coa.results.thc}% | CBD {coa.results.cbd}%
+                    </div>
+                    <div className="text-xs text-zinc-400 dark:text-zinc-500">{coa.labName}</div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Dispensaries Supplied */}
       <div className="mt-8">

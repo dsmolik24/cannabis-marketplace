@@ -30,6 +30,49 @@ export interface InventoryUnit {
   thcTested: number;
   cbdTested: number;
   status: "available" | "low-stock" | "sold-out" | "coming-soon";
+  coaId?: string;
+}
+
+export interface COA {
+  id: string;
+  batchId: string;
+  growHouseId: string;
+  strainId: string;
+  labName: string;
+  labLicense: string;
+  testDate: string;
+  expirationDate: string;
+  fileName: string;
+  fileUrl: string;
+  results: {
+    thc: number;
+    thca: number;
+    cbd: number;
+    cbda: number;
+    cbg: number;
+    cbn: number;
+    totalCannabinoids: number;
+    totalTerpenes: number;
+    topTerpenes: { name: string; percentage: number }[];
+    moisture: number;
+    passedPesticides: boolean;
+    passedHeavyMetals: boolean;
+    passedMicrobials: boolean;
+    passedMycotoxins: boolean;
+    passedResidualSolvents: boolean;
+  };
+  status: "verified" | "pending" | "expired" | "rejected";
+  uploadedAt: string;
+  uploadedBy: string;
+}
+
+export interface GrowHouseVolume {
+  growHouseId: string;
+  strainId: string;
+  availableLbs: number;
+  projectedLbs: number;
+  nextHarvestDate: string;
+  lastUpdated: string;
 }
 
 import { GrowHouse } from "./types";
@@ -298,6 +341,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 21.3,
     cbdTested: 0.08,
     status: "available",
+    coaId: "coa-1",
   },
   {
     id: "inv-2",
@@ -315,6 +359,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 21.3,
     cbdTested: 0.08,
     status: "available",
+    coaId: "coa-1",
   },
   {
     id: "inv-3",
@@ -332,6 +377,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 21.3,
     cbdTested: 0.08,
     status: "available",
+    coaId: "coa-1",
   },
   {
     id: "inv-4",
@@ -349,6 +395,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 21.3,
     cbdTested: 0.08,
     status: "low-stock",
+    coaId: "coa-1",
   },
   {
     id: "inv-5",
@@ -366,6 +413,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 24.1,
     cbdTested: 0.28,
     status: "available",
+    coaId: "coa-2",
   },
   {
     id: "inv-6",
@@ -383,6 +431,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 24.1,
     cbdTested: 0.28,
     status: "available",
+    coaId: "coa-2",
   },
   {
     id: "inv-7",
@@ -400,6 +449,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 25.4,
     cbdTested: 0.09,
     status: "sold-out",
+    coaId: "coa-3",
   },
   {
     id: "inv-8",
@@ -417,6 +467,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 27.2,
     cbdTested: 0.07,
     status: "coming-soon",
+    coaId: "coa-5",
   },
   // Mountain High Cannabis
   {
@@ -435,6 +486,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 22.5,
     cbdTested: 0.18,
     status: "available",
+    coaId: "coa-3",
   },
   {
     id: "inv-10",
@@ -452,6 +504,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 22.5,
     cbdTested: 0.18,
     status: "available",
+    coaId: "coa-3",
   },
   {
     id: "inv-11",
@@ -469,6 +522,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 20.8,
     cbdTested: 0.12,
     status: "available",
+    coaId: "coa-6",
   },
   {
     id: "inv-12",
@@ -521,6 +575,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 0.9,
     cbdTested: 20.4,
     status: "available",
+    coaId: "coa-4",
   },
   {
     id: "inv-15",
@@ -538,6 +593,7 @@ export const inventory: InventoryUnit[] = [
     thcTested: 0.9,
     cbdTested: 20.4,
     status: "available",
+    coaId: "coa-4",
   },
   {
     id: "inv-16",
@@ -574,6 +630,251 @@ export const inventory: InventoryUnit[] = [
     status: "low-stock",
   },
 ];
+
+export const coas: COA[] = [
+  {
+    id: "coa-1",
+    batchId: "GV-BD-2026-042",
+    growHouseId: "gh1",
+    strainId: "s1",
+    labName: "Colorado Analytical Labs",
+    labLicense: "LAB-CO-2024-0012",
+    testDate: "2026-04-22",
+    expirationDate: "2027-04-22",
+    fileName: "COA-GV-BD-2026-042.pdf",
+    fileUrl: "/coa/COA-GV-BD-2026-042.pdf",
+    results: {
+      thc: 21.3,
+      thca: 24.1,
+      cbd: 0.08,
+      cbda: 0.12,
+      cbg: 0.34,
+      cbn: 0.02,
+      totalCannabinoids: 25.86,
+      totalTerpenes: 3.2,
+      topTerpenes: [
+        { name: "Myrcene", percentage: 1.2 },
+        { name: "Caryophyllene", percentage: 0.9 },
+        { name: "Pinene", percentage: 0.6 },
+      ],
+      moisture: 10.2,
+      passedPesticides: true,
+      passedHeavyMetals: true,
+      passedMicrobials: true,
+      passedMycotoxins: true,
+      passedResidualSolvents: true,
+    },
+    status: "verified",
+    uploadedAt: "2026-04-23T10:00:00Z",
+    uploadedBy: "Rocky Mountain Cultivators",
+  },
+  {
+    id: "coa-2",
+    batchId: "GV-OG-2026-039",
+    growHouseId: "gh1",
+    strainId: "s2",
+    labName: "Colorado Analytical Labs",
+    labLicense: "LAB-CO-2024-0012",
+    testDate: "2026-04-08",
+    expirationDate: "2027-04-08",
+    fileName: "COA-GV-OG-2026-039.pdf",
+    fileUrl: "/coa/COA-GV-OG-2026-039.pdf",
+    results: {
+      thc: 24.1,
+      thca: 27.3,
+      cbd: 0.28,
+      cbda: 0.35,
+      cbg: 0.41,
+      cbn: 0.05,
+      totalCannabinoids: 28.4,
+      totalTerpenes: 2.8,
+      topTerpenes: [
+        { name: "Limonene", percentage: 1.1 },
+        { name: "Myrcene", percentage: 0.8 },
+        { name: "Linalool", percentage: 0.5 },
+      ],
+      moisture: 9.8,
+      passedPesticides: true,
+      passedHeavyMetals: true,
+      passedMicrobials: true,
+      passedMycotoxins: true,
+      passedResidualSolvents: true,
+    },
+    status: "verified",
+    uploadedAt: "2026-04-09T14:30:00Z",
+    uploadedBy: "Rocky Mountain Cultivators",
+  },
+  {
+    id: "coa-3",
+    batchId: "MH-SD-2026-041",
+    growHouseId: "gh2",
+    strainId: "s3",
+    labName: "Green Scientific Labs",
+    labLicense: "LAB-CO-2024-0027",
+    testDate: "2026-04-17",
+    expirationDate: "2027-04-17",
+    fileName: "COA-MH-SD-2026-041.pdf",
+    fileUrl: "/coa/COA-MH-SD-2026-041.pdf",
+    results: {
+      thc: 22.5,
+      thca: 25.6,
+      cbd: 0.18,
+      cbda: 0.22,
+      cbg: 0.29,
+      cbn: 0.01,
+      totalCannabinoids: 26.8,
+      totalTerpenes: 3.5,
+      topTerpenes: [
+        { name: "Caryophyllene", percentage: 1.4 },
+        { name: "Limonene", percentage: 1.0 },
+        { name: "Myrcene", percentage: 0.7 },
+      ],
+      moisture: 11.0,
+      passedPesticides: true,
+      passedHeavyMetals: true,
+      passedMicrobials: true,
+      passedMycotoxins: true,
+      passedResidualSolvents: true,
+    },
+    status: "verified",
+    uploadedAt: "2026-04-18T09:15:00Z",
+    uploadedBy: "Sun Valley Farms",
+  },
+  {
+    id: "coa-4",
+    batchId: "SW-AC-2026-040",
+    growHouseId: "gh3",
+    strainId: "s8",
+    labName: "Peak Testing Services",
+    labLicense: "LAB-CO-2024-0041",
+    testDate: "2026-04-15",
+    expirationDate: "2027-04-15",
+    fileName: "COA-SW-AC-2026-040.pdf",
+    fileUrl: "/coa/COA-SW-AC-2026-040.pdf",
+    results: {
+      thc: 0.9,
+      thca: 1.1,
+      cbd: 20.4,
+      cbda: 23.1,
+      cbg: 0.8,
+      cbn: 0.01,
+      totalCannabinoids: 25.42,
+      totalTerpenes: 2.1,
+      topTerpenes: [
+        { name: "Myrcene", percentage: 0.9 },
+        { name: "Pinene", percentage: 0.6 },
+        { name: "Caryophyllene", percentage: 0.4 },
+      ],
+      moisture: 10.5,
+      passedPesticides: true,
+      passedHeavyMetals: true,
+      passedMicrobials: true,
+      passedMycotoxins: true,
+      passedResidualSolvents: true,
+    },
+    status: "verified",
+    uploadedAt: "2026-04-16T11:45:00Z",
+    uploadedBy: "Peak Genetics Lab",
+  },
+  {
+    id: "coa-5",
+    batchId: "GV-WC-2026-044",
+    growHouseId: "gh4",
+    strainId: "s7",
+    labName: "Colorado Analytical Labs",
+    labLicense: "LAB-CO-2024-0012",
+    testDate: "2026-05-08",
+    expirationDate: "2027-05-08",
+    fileName: "COA-GV-WC-2026-044.pdf",
+    fileUrl: "/coa/COA-GV-WC-2026-044.pdf",
+    results: {
+      thc: 27.2,
+      thca: 30.8,
+      cbd: 0.07,
+      cbda: 0.09,
+      cbg: 0.52,
+      cbn: 0.03,
+      totalCannabinoids: 31.71,
+      totalTerpenes: 3.8,
+      topTerpenes: [
+        { name: "Limonene", percentage: 1.5 },
+        { name: "Caryophyllene", percentage: 1.1 },
+        { name: "Myrcene", percentage: 0.8 },
+      ],
+      moisture: 9.5,
+      passedPesticides: true,
+      passedHeavyMetals: true,
+      passedMicrobials: true,
+      passedMycotoxins: true,
+      passedResidualSolvents: true,
+    },
+    status: "pending",
+    uploadedAt: "2026-05-09T08:00:00Z",
+    uploadedBy: "High Plains Harvest Co.",
+  },
+  {
+    id: "coa-6",
+    batchId: "MH-GDP-2026-040",
+    growHouseId: "gh4",
+    strainId: "s5",
+    labName: "Green Scientific Labs",
+    labLicense: "LAB-CO-2024-0027",
+    testDate: "2026-04-12",
+    expirationDate: "2027-04-12",
+    fileName: "COA-MH-GDP-2026-040.pdf",
+    fileUrl: "/coa/COA-MH-GDP-2026-040.pdf",
+    results: {
+      thc: 20.8,
+      thca: 23.5,
+      cbd: 0.12,
+      cbda: 0.15,
+      cbg: 0.22,
+      cbn: 0.04,
+      totalCannabinoids: 24.03,
+      totalTerpenes: 2.6,
+      topTerpenes: [
+        { name: "Myrcene", percentage: 1.0 },
+        { name: "Pinene", percentage: 0.8 },
+        { name: "Caryophyllene", percentage: 0.5 },
+      ],
+      moisture: 10.8,
+      passedPesticides: true,
+      passedHeavyMetals: true,
+      passedMicrobials: true,
+      passedMycotoxins: true,
+      passedResidualSolvents: true,
+    },
+    status: "verified",
+    uploadedAt: "2026-04-13T16:20:00Z",
+    uploadedBy: "High Plains Harvest Co.",
+  },
+];
+
+export const growHouseVolumes: GrowHouseVolume[] = [
+  { growHouseId: "gh1", strainId: "s1", availableLbs: 42, projectedLbs: 65, nextHarvestDate: "2026-06-15", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh1", strainId: "s2", availableLbs: 28, projectedLbs: 40, nextHarvestDate: "2026-06-01", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh1", strainId: "s9", availableLbs: 15, projectedLbs: 30, nextHarvestDate: "2026-06-20", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh2", strainId: "s3", availableLbs: 85, projectedLbs: 120, nextHarvestDate: "2026-06-10", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh2", strainId: "s4", availableLbs: 0, projectedLbs: 55, nextHarvestDate: "2026-07-01", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh2", strainId: "s10", availableLbs: 60, projectedLbs: 60, nextHarvestDate: "2026-06-25", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh3", strainId: "s8", availableLbs: 18, projectedLbs: 25, nextHarvestDate: "2026-06-05", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh3", strainId: "s6", availableLbs: 8, projectedLbs: 20, nextHarvestDate: "2026-06-12", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh4", strainId: "s5", availableLbs: 120, projectedLbs: 150, nextHarvestDate: "2026-06-08", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh4", strainId: "s7", availableLbs: 0, projectedLbs: 45, nextHarvestDate: "2026-06-18", lastUpdated: "2026-05-20T08:00:00Z" },
+  { growHouseId: "gh4", strainId: "s10", availableLbs: 95, projectedLbs: 95, nextHarvestDate: "2026-07-10", lastUpdated: "2026-05-20T08:00:00Z" },
+];
+
+export function getCoaByBatchId(batchId: string): COA | undefined {
+  return coas.find((c) => c.batchId === batchId);
+}
+
+export function getCoasByGrowHouse(growHouseId: string): COA[] {
+  return coas.filter((c) => c.growHouseId === growHouseId);
+}
+
+export function getVolumesByGrowHouse(growHouseId: string): GrowHouseVolume[] {
+  return growHouseVolumes.filter((v) => v.growHouseId === growHouseId);
+}
 
 export function getStrainBySlug(slug: string): Strain | undefined {
   return strains.find((s) => s.slug === slug);

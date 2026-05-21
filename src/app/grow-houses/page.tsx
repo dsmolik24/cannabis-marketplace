@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { growHouses, inventory, strains } from "@/lib/strains";
+import { growHouses, inventory, strains, growHouseVolumes } from "@/lib/strains";
+import { LeafRatingBadge } from "@/components/leaf-rating";
 
 export const metadata = {
   title: "Grow Houses | CannaMart Wholesale",
@@ -65,6 +66,8 @@ export default function GrowHousesPage() {
               )
             ),
           ];
+          const volumes = growHouseVolumes.filter((v) => v.growHouseId === gh.id);
+          const totalAvailableLbs = volumes.reduce((s, v) => s + v.availableLbs, 0);
 
           return (
             <Link
@@ -81,11 +84,7 @@ export default function GrowHousesPage() {
                     {gh.city}, {gh.state} | License: {gh.license}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 dark:bg-green-900/20">
-                  <span className="text-sm font-semibold text-green-800 dark:text-green-400">
-                    {gh.rating}
-                  </span>
-                </div>
+                <LeafRatingBadge rating={gh.rating} />
               </div>
 
               <p className="mt-3 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-400">
@@ -143,6 +142,17 @@ export default function GrowHousesPage() {
                     units
                   </span>
                 </div>
+                {totalAvailableLbs > 0 && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                    </span>
+                    <span className="text-sm font-semibold text-green-700 dark:text-green-400">
+                      {totalAvailableLbs} lbs
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Strains supplied */}

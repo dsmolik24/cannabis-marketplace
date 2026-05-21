@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { getDispensaryBySlug, getProductsByDispensary } from "@/lib/data";
+import { LeafRating } from "@/components/leaf-rating";
 
 export default async function DispensaryPage({
   params,
@@ -40,13 +41,8 @@ export default async function DispensaryPage({
               {dispensary.description}
             </p>
           </div>
-          <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2 dark:bg-green-900/20">
-            <span className="text-xl font-bold text-green-800 dark:text-green-400">
-              {dispensary.rating}
-            </span>
-            <span className="text-sm text-green-600 dark:text-green-500">
-              ({dispensary.reviewCount} reviews)
-            </span>
+          <div className="flex flex-col items-end gap-1">
+            <LeafRating rating={dispensary.rating} size="lg" showValue reviewCount={dispensary.reviewCount} />
           </div>
         </div>
 

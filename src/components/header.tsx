@@ -5,6 +5,7 @@ const navLinks = [
   { href: "/strains", label: "Live Strains" },
   { href: "/dispensaries", label: "Dispensaries" },
   { href: "/grow-houses", label: "Grow Houses" },
+  { href: "/coa/upload", label: "COAs" },
 ];
 
 export function Header() {

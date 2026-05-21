@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getProductBySlug, dispensaries } from "@/lib/data";
+import { inventory, coas, strains } from "@/lib/strains";
+import { LeafRating } from "@/components/leaf-rating";
+import { CoaBadge } from "@/components/coa-badge";
 
 export default async function ProductPage({
   params,
@@ -80,10 +83,10 @@ export default async function ProductPage({
             </div>
             <div className="text-center">
               <div className="text-sm text-zinc-500 dark:text-zinc-400">
-                Rating
+                Quality
               </div>
-              <div className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                {product.rating}/5
+              <div className="mt-1 flex justify-center">
+                <LeafRating rating={product.rating} size="sm" />
               </div>
             </div>
           </div>
@@ -113,8 +116,68 @@ export default async function ProductPage({
               </div>
             </Link>
           )}
+
+          {/* COA */}
+          <ProductCoaSection productSlug={product.slug} dispensaryId={product.dispensaryId} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function ProductCoaSection({ productSlug, dispensaryId }: { productSlug: string; dispensaryId: string }) {
+  // Find matching strain from the strains data
+  const strain = strains.find((s) => s.slug === productSlug);
+  if (!strain) return null;
+
+  // Find inventory items for this strain and dispensary
+  const matchingInventory = inventory.filter(
+    (i) => i.strainId === strain.id && i.dispensaryId === dispensaryId && i.coaId
+  );
+  if (matchingInventory.length === 0) return null;
+
+  // Get unique COAs
+  const coaIds = [...new Set(matchingInventory.map((i) => i.coaId))];
+  const matchingCoas = coaIds
+    .map((id) => coas.find((c) => c.id === id))
+    .filter((c): c is NonNullable<typeof c> => c !== undefined);
+
+  if (matchingCoas.length === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+      <div className="flex items-center justify-between">
+        <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+          Lab Testing
+        </div>
+        <div className="flex gap-2">
+          {matchingCoas.map((coa) => (
+            <CoaBadge key={coa.id} coa={coa} />
+          ))}
+        </div>
+      </div>
+      {matchingCoas[0] && (
+        <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
+          <div className="rounded-lg bg-zinc-50 p-2 dark:bg-zinc-800/50">
+            <div className="text-zinc-400">Total Cannabinoids</div>
+            <div className="mt-0.5 font-semibold text-zinc-900 dark:text-zinc-100">
+              {matchingCoas[0].results.totalCannabinoids}%
+            </div>
+          </div>
+          <div className="rounded-lg bg-zinc-50 p-2 dark:bg-zinc-800/50">
+            <div className="text-zinc-400">Terpenes</div>
+            <div className="mt-0.5 font-semibold text-zinc-900 dark:text-zinc-100">
+              {matchingCoas[0].results.totalTerpenes}%
+            </div>
+          </div>
+          <div className="rounded-lg bg-zinc-50 p-2 dark:bg-zinc-800/50">
+            <div className="text-zinc-400">Lab</div>
+            <div className="mt-0.5 font-semibold text-zinc-900 dark:text-zinc-100">
+              {matchingCoas[0].labName.split(" ")[0]}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
